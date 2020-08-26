@@ -3,10 +3,11 @@ import * as path from "path";
 import { buildSchema } from "type-graphql";
 
 import { logger } from "../logger";
-import { RecipeResolver } from "./graphql/resolvers/recipe-resolver";
 import { DatabaseManager } from "./database/database-manager";
 import { GraphQLSchema } from "graphql";
 import { configuration } from "../configuration";
+import { AuthorResolver } from "./graphql/resolvers/author-resolver";
+import { BookResolver } from "./graphql/resolvers/book-resolver";
 
 export class Service {
 
@@ -17,13 +18,12 @@ export class Service {
 
         // Build GraphQL schema and construct server
         buildSchema({
-            resolvers: [RecipeResolver],
+            resolvers: [AuthorResolver, BookResolver],
             emitSchemaFile: path.resolve(__dirname, "schema.gql"),
         })
             .then((schema: GraphQLSchema) => {
                 this.server = new ApolloServer({
                     schema,
-                    // enable GraphQL Playground
                     playground: true,
                 });
             })
@@ -41,7 +41,7 @@ export class Service {
         try {
             await this.databaseManager.connect();
             const { url } = await this.server.listen(configuration.serverPort);
-            console.log(`Server is running, GraphQL Playground available at ${url}`);
+            logger.log(`Server is running, GraphQL Playground available at ${url}`);
         } catch (error) {
             logger.error("An unexpected error occurred when the server starts");
             logger.error(error);

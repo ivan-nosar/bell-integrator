@@ -1,5 +1,6 @@
 import { createConnection, Connection } from "typeorm";
-import { Author, Book } from "./entities";
+import { Author } from "../entities/author";
+import { Book } from "../entities/book";
 import { configuration } from "../../configuration";
 
 export class DatabaseManager {
