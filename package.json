@@ -14,8 +14,7 @@
     "dev": "tsc-watch --project tsconfig.json --preserveWatchOutput --onSuccess \"npm run start\"",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "lint:fix": "npm run lint -- --fix",
-    "start": "node --harmony --max-old-space-size=8192 ./dist/main.js",
-    "unit-test": "npm run build && cross-env NODE_ENV=test mocha --reporter spec test/unit"
+    "start": "node --harmony --max-old-space-size=8192 ./dist/main.js"
   },
   "dependencies": {
     "apollo-server": "2.16.1",
